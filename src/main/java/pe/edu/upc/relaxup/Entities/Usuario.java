@@ -4,98 +4,86 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario
-{
+public class Usuario {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private Long id;    // mismo valor que users.id
 
-    @Column(name ="nombre" ,nullable = false,length =50 )
-    private String Nombres;
+    @OneToOne
+    @MapsId                       // usa el id de Users como PK
+    @JoinColumn(name = "id_user") // nombre de la columna en la tabla usuario
+    private Users user;
 
-    @Column(name ="email" ,nullable = false,length = 50)
-    private String Email;
+    @Column(name = "nombre", nullable = false, length = 50)
+    private String nombres;
 
-    @Column(name = "direccion",nullable = false,length = 50)
-    private String Direccion;
+    @Column(name = "email", nullable = false, length = 50)
+    private String email;
 
-    @Column(name = "usuario",nullable = false,length =50 )
-    private String Usuario;
+    @Column(name = "direccion", nullable = false, length = 50)
+    private String direccion;
 
-    @Column(name = "contraseña",nullable = false,length = 50)
-    private String Contraseña;
+    @Column(name = "celular", nullable = false)
+    private int celular;
 
-    @Column(name = "celular",nullable = false)
-    private int Celular;
+    // Constructor vacío (obligatorio para JPA)
+    public Usuario() {}
 
-    public Usuario() {
+    // Constructor con todos los campos (opcional)
+    public Usuario(Long id, String nombres, String email, String direccion, int celular) {
+        this.id = id;
+        this.nombres = nombres;
+        this.email = email;
+        this.direccion = direccion;
+        this.celular = celular;
     }
 
-    public Usuario(int idUsuario, String nombres, String email, String direccion, String usuario, String contraseña, int celular) {
-        this.idUsuario = idUsuario;
-        Nombres = nombres;
-        Email = email;
-        Direccion = direccion;
-        Usuario = usuario;
-        Contraseña = contraseña;
-        Celular = celular;
+    // Getters y setters
+    public Long getId() {
+        return id;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     public String getNombres() {
-        return Nombres;
+        return nombres;
     }
 
     public void setNombres(String nombres) {
-        Nombres = nombres;
+        this.nombres = nombres;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getDireccion() {
-        return Direccion;
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
-        Direccion = direccion;
-    }
-
-    public String getUsuario() {
-        return Usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        Usuario = usuario;
-    }
-
-    public String getContraseña() {
-        return Contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        Contraseña = contraseña;
+        this.direccion = direccion;
     }
 
     public int getCelular() {
-        return Celular;
+        return celular;
     }
 
     public void setCelular(int celular) {
-        Celular = celular;
+        this.celular = celular;
     }
 }
-
-

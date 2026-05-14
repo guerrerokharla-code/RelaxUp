@@ -38,9 +38,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/nuevo")
-    @PreAuthorize("hasAuthority('ADMIN')")
+
     public ResponseEntity<?> registrar(@RequestBody UsuarioDTO dto){
         ModelMapper m = new ModelMapper();
+        System.out.println(">>> LLEGÓ AL CONTROLADOR");
         Usuario u = m.map(dto, Usuario.class);
 
         Usuario usu = uS.insert(u);
@@ -63,9 +64,12 @@ public class UsuarioController {
         usu.setNombres(dto.getNombres());
         usu.setEmail(dto.getEmail());
         usu.setDireccion(dto.getDireccion());
-        usu.setUsuario(dto.getUsuario());
         usu.setCelular(dto.getCelular());
-        usu.setContraseña(dto.getContraseña());
+        // Si en el DTO incluyes idUser, podrías establecer la relación:
+        // if (dto.getIdUser() != null) {
+        //     Users user = userRepository.findById(dto.getIdUser()).orElse(null);
+        //     usu.setUser(user);
+        // }
 
         uS.update(usu);
 

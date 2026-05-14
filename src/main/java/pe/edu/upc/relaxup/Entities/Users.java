@@ -1,20 +1,24 @@
 package pe.edu.upc.relaxup.Entities;
 
 import jakarta.persistence.*;
-
 import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class Users {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 30, unique = true)
     private String username;
+
     @Column(length = 200)
     private String password;
+
     private Boolean enabled;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private List<Role> roles;

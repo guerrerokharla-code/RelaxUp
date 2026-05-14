@@ -1,7 +1,6 @@
 package pe.edu.upc.relaxup.Entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,23 +11,22 @@ public class Recordatorio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRecordatorio;
 
-    @Column(name = "mensaje",nullable = false,length = 300)
+    @Column(name = "mensaje", nullable = false, length = 300)
     private String mensaje;
 
-    @Column(name = "fechaHora",nullable = false)
+    @Column(name = "fechaHora", nullable = false)
     private LocalDateTime fechaHora;
 
-    @Column(name = "tipo",nullable = false,length = 30)
+    @Column(name = "tipo", nullable = false, length = 30)
     private String tipo;
 
     @ManyToOne
     @JoinColumn(name = "idUsuario")
-    private Usuario usuario;
+    private Users usuario;   // ← cambió a Users
 
-    public Recordatorio() {
-    }
+    public Recordatorio() {}
 
-    public Recordatorio(Usuario usuario, String tipo, LocalDateTime fechaHora, String mensaje, int idRecordatorio) {
+    public Recordatorio(Users usuario, String tipo, LocalDateTime fechaHora, String mensaje, int idRecordatorio) {
         this.usuario = usuario;
         this.tipo = tipo;
         this.fechaHora = fechaHora;
@@ -36,43 +34,14 @@ public class Recordatorio {
         this.idRecordatorio = idRecordatorio;
     }
 
-    public int getIdRecordatorio() {
-        return idRecordatorio;
-    }
-
-    public void setIdRecordatorio(int idRecordatorio) {
-        this.idRecordatorio = idRecordatorio;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    public int getIdRecordatorio() { return idRecordatorio; }
+    public void setIdRecordatorio(int idRecordatorio) { this.idRecordatorio = idRecordatorio; }
+    public String getMensaje() { return mensaje; }
+    public void setMensaje(String mensaje) { this.mensaje = mensaje; }
+    public LocalDateTime getFechaHora() { return fechaHora; }
+    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
+    public Users getUsuario() { return usuario; }
+    public void setUsuario(Users usuario) { this.usuario = usuario; }
 }

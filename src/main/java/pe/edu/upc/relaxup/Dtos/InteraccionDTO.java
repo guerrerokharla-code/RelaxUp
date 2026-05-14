@@ -1,8 +1,5 @@
 package pe.edu.upc.relaxup.Dtos;
 
-import pe.edu.upc.relaxup.Entities.Comunidad;
-import pe.edu.upc.relaxup.Entities.Usuario;
-
 import java.time.LocalDate;
 
 public class InteraccionDTO {

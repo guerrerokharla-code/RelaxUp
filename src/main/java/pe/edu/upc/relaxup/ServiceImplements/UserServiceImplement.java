@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.edu.upc.relaxup.Entities.Role;
 import pe.edu.upc.relaxup.Entities.Users;
-import pe.edu.upc.relaxup.Entities.Usuario;
 import pe.edu.upc.relaxup.Repositories.IUserRepository;
-import pe.edu.upc.relaxup.Repositories.IUsuarioRepository;
 import pe.edu.upc.relaxup.ServiceInterfaces.IUserService;
 
 import java.util.List;
@@ -22,35 +20,25 @@ public class UserServiceImplement implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private IUsuarioRepository usuarioRepo;
-
-    @Transactional
     @Override
+    @Transactional
     public Users insert(Users user) {
-        // 1. Encriptar contraseña y activar usuario
+        // Encriptar contraseña y activar
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
 
-        // 2. Asignar rol USER por defecto
+        // Datos de perfil por defecto (si no vienen en el request)
+        if (user.getNombres() == null) user.setNombres(user.getUsername());
+        if (user.getEmail() == null) user.setEmail(user.getUsername() + "@email.com");
+        if (user.getDireccion() == null) user.setDireccion("Pendiente");
+        user.setCelular(0);
+
+        // Asignar rol USER por defecto
         Role defaultRole = new Role();
         defaultRole.setRol("USER");
         defaultRole.setUser(user);
         user.setRoles(List.of(defaultRole));
 
-        // 3. Guardar el usuario de seguridad
-        Users savedUser = uR.save(user);
-
-// Crear perfil OBLIGATORIO y enlazarlo
-        Usuario perfil = new Usuario();
-// perfil.setId(savedUser.getId());  ← ¡QUITA ESTA LÍNEA!
-        perfil.setUser(savedUser);         // ← la relación es suficiente para @MapsId
-        perfil.setNombres(savedUser.getUsername());
-        perfil.setEmail(savedUser.getUsername() + "@email.com");
-        perfil.setDireccion("Pendiente");
-        perfil.setCelular(0);
-        usuarioRepo.save(perfil);          // ahora ejecutará un persist porque el ID es null
-
-        return savedUser;
+        return uR.save(user);
     }
 }
